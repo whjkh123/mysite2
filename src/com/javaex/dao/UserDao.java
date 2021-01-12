@@ -143,7 +143,7 @@ public class UserDao {
 				String name = rs.getString("name");
 				String gender = rs.getString("gender");
 
-				uVo = new UserVo(no, id, password, name, gender);
+				uVo = new UserVo(user_no, id, password, name, gender);
 			}
 
 		} catch (SQLException e) {

@@ -65,7 +65,7 @@
 			<!-- //content-head -->
 
 			<div id="guestbook">
-				<form action="/mysite2/gbc" method="get">
+				<form action="/mysite2/gbc" method="post">
 					<table id="guestDelete">
 						<colgroup>
 							<col style="width: 10%;">

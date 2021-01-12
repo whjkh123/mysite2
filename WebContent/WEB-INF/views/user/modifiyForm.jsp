@@ -82,7 +82,7 @@
 
 			<div id="user">
 				<div id="modifyForm">
-					<form action="/mysite2/user" method="get">
+					<form action="/mysite2/user" method="post">
 
 						<!-- 아이디 -->
 						<div class="form-group">

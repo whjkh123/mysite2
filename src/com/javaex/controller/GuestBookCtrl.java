@@ -17,9 +17,10 @@ import com.javaex.vo.GuestBookVo;
 public class GuestBookCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("GuestBookCtrl");
+
+		request.setCharacterEncoding("UTF-8");
 
 		String act = request.getParameter("action");
 
@@ -84,8 +85,7 @@ public class GuestBookCtrl extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		doGet(request, response);
 	}

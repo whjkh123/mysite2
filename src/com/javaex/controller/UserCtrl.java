@@ -17,9 +17,10 @@ import com.javaex.vo.UserVo;
 public class UserCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("UserCtrl");
+
+		request.setCharacterEncoding("UTF-8");
 
 		String act = request.getParameter("action");
 
@@ -124,14 +125,16 @@ public class UserCtrl extends HttpServlet {
 			UserDao uDao = new UserDao();
 			uDao.dbUpd(uVo);
 
+			System.out.println(uVo.toString());
+
 			// #1 id = test, password = 1234 login
 			// #2 회원정보 수정 password = 1234 → 1111, name = 홍길동 → 이효리, gender = male → female
 			// #3 sql users table 상에서 데이터 변경 확인
 			// #4 'modifiyForm'에서 '회원정보수정'을 클릭 후 'main'으로 redirect 됐을 시 name = 홍길동 유지
-			// #5 logout 후 id = test, password = 1111 login 성공, name = 조경환 변경
+			// #5 logout 후 id = test, password = 1111 login 성공, name = 이효리 변경
 
 			// UserVo data attribute to jsp
-			// 해당 계정(id, password 비교)의 데이터 출력
+			// 해당 계정(id, password 비교)의 UserVo 데이터 출력
 			HttpSession session = request.getSession();
 			session.setAttribute("authUser", uVo);
 			// 수정 된 데이터를 'session'으로부터 load → 'authUser'에 save
@@ -143,9 +146,7 @@ public class UserCtrl extends HttpServlet {
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
