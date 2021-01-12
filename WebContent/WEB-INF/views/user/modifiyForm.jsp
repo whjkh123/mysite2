@@ -3,7 +3,6 @@
 <%@ page import="com.javaex.vo.UserVo"%>
 
 <%
-	UserVo authUser = (UserVo) session.getAttribute("authUser");// authUser.getNo()
 	UserVo uVo = (UserVo) session.getAttribute("userVo");
 %>
 
