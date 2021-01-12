@@ -73,7 +73,8 @@ public class UserCtrl extends HttpServlet {
 
 				System.out.println(uVo.toString());
 
-				// UserVo(id, psw) data attribute to jsp
+				// UserVo data attribute to jsp
+				// id, password 비교
 				HttpSession session = request.getSession();
 				session.setAttribute("authUser", uVo);
 
@@ -87,6 +88,55 @@ public class UserCtrl extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.removeAttribute("authUser");
 			session.invalidate();
+
+			WebUtil.redirect(request, response, "/mysite2/main");
+		} else if ("modifiyForm".equals(act)) {
+			System.out.println(act + " 회원정보 수정 창");
+
+			HttpSession session = request.getSession();
+			UserVo authVo = (UserVo) session.getAttribute("authUser");
+
+			UserDao uDao = new UserDao();
+
+			UserVo uVo = uDao.getOne(authVo.getNo());
+
+			session.setAttribute("userVo", uVo);
+
+			// modifiyForm forword
+			WebUtil.forword(request, response, "/WEB-INF/views/user/modifiyForm.jsp");
+		} else if ("modifiy".equals(act)) {
+			System.out.println(act + " 회원정보 수정");
+			// id = test
+			// password = 1234 → 1111
+			// name = 홍길동 → 이효리
+			// gender = male → female
+
+			// error:java.sql.SQLException: 인덱스에서 누락된 IN 또는 OUT 매개변수:: 4 발생
+			// Update users SET password = ?, name = ?, gender = ? WHERE no = ?
+			// 변수(?)는 4개인데 sql 쿼리문엔 3개만 작성 → 해결
+			int no = Integer.parseInt(request.getParameter("no"));
+			String psw = request.getParameter("psw");
+			String name = request.getParameter("name");
+			String gender = request.getParameter("gender");
+
+			UserVo uVo = new UserVo(no, psw, name, gender);
+
+			UserDao uDao = new UserDao();
+			uDao.dbUpd(uVo);
+
+			// #1 id = test, password = 1234 login
+			// #2 회원정보 수정 password = 1234 → 1111, name = 홍길동 → 이효리, gender = male → female
+			// #3 sql users table 상에서 데이터 변경 확인
+			// #4 'modifiyForm'에서 '회원정보수정'을 클릭 후 'main'으로 redirect 됐을 시 name = 홍길동 유지
+			// #5 logout 후 id = test, password = 1111 login 성공, name = 조경환 변경
+
+			// UserVo data attribute to jsp
+			// 해당 계정(id, password 비교)의 데이터 출력
+			HttpSession session = request.getSession();
+			session.setAttribute("authUser", uVo);
+			// 수정 된 데이터를 'session'으로부터 load → 'authUser'에 save
+			// 회원정보 수정 후 데이터 즉시 반영 확인
+			// logout 후 다시 login 했을 시 변경 된 데이터 유지 확인
 
 			WebUtil.redirect(request, response, "/mysite2/main");
 		}
