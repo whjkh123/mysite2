@@ -31,21 +31,21 @@
 			<%
 				if (uVo == null) {
 			%>
-									<ul>
-										<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
-										<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
-									</ul>
-								<%
-									} else {
-								%>
-											<ul>
-												<li><%=uVo.getName()%> 님 안녕하세요^^</li>
-												<li><a href="/mysite2/user?action=logout">로그아웃</a></li>
-												<li><a href="/mysite2/user?action=modifiyForm">회원정보수정</a></li>
-											</ul>
-										<%
-											}
-										%>
+			<ul>
+				<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
+				<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
+			</ul>
+			<%
+				} else {
+			%>
+			<ul>
+				<li><%=uVo.getName()%> 님 안녕하세요^^</li>
+				<li><a href="/mysite2/user?action=logout">로그아웃</a></li>
+				<li><a href="/mysite2/user?action=modifiyForm">회원정보수정</a></li>
+			</ul>
+			<%
+				}
+			%>
 		</div>
 		<!-- //header -->
 
@@ -117,28 +117,28 @@
 				<%
 					for (int i = 0; i < gList.size(); i++) {
 				%>
-															<table class="guestRead">
-																<colgroup>
-																	<col style="width: 10%;">
-																	<col style="width: 40%;">
-																	<col style="width: 40%;">
-																	<col style="width: 10%;">
-																</colgroup>
-																<tr>
-																	<td><%=gList.get(i).getNo()%></td>
-																	<td><%=gList.get(i).getName()%></td>
-																	<td><%=gList.get(i).reg_date%></td>
-																	<td><a
-																		href="/mysite2/gbc?action=deleteForm&no=<%=gList.get(i).getNo()%>">[삭제]</a></td>
-																</tr>
-																<tr>
-																	<td colspan=4 class="text-left"><%=gList.get(i).getContent()%></td>
-																</tr>
-															</table>
+				<table class="guestRead">
+					<colgroup>
+						<col style="width: 10%;">
+						<col style="width: 40%;">
+						<col style="width: 40%;">
+						<col style="width: 10%;">
+					</colgroup>
+					<tr>
+						<td><%=gList.get(i).getNo()%></td>
+						<td><%=gList.get(i).getName()%></td>
+						<td><%=gList.get(i).reg_date%></td>
+						<td><a
+							href="/mysite2/gbc?action=deleteForm&no=<%=gList.get(i).getNo()%>">[삭제]</a></td>
+					</tr>
+					<tr>
+						<td colspan=4 class="text-left"><%=gList.get(i).getContent()%></td>
+					</tr>
+				</table>
 				<!-- //guestRead -->
-														<%
-															}
-														%>
+				<%
+					}
+				%>
 			</div>
 			<!-- //guestbook -->
 		</div>

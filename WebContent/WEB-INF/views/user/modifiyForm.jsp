@@ -26,21 +26,21 @@
 			<%
 				if (uVo == null) {
 			%>
-									<ul>
-										<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
-										<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
-									</ul>
-								<%
-									} else {
-								%>
-											<ul>
-												<li><%=uVo.getName()%> 님 안녕하세요^^</li>
-												<li><a href="/mysite2/user?action=logout">로그아웃</a></li>
-												<li><a href="/mysite2/user?action=modifiyForm">회원정보수정</a></li>
-											</ul>
-										<%
-											}
-										%>
+			<ul>
+				<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
+				<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
+			</ul>
+			<%
+				} else {
+			%>
+			<ul>
+				<li><%=uVo.getName()%> 님 안녕하세요^^</li>
+				<li><a href="/mysite2/user?action=logout">로그아웃</a></li>
+				<li><a href="/mysite2/user?action=modifiyForm">회원정보수정</a></li>
+			</ul>
+			<%
+				}
+			%>
 		</div>
 		<!-- //header -->
 
@@ -108,20 +108,20 @@
 							<%
 								if ("male".equals(uVo.getGender())) {
 							%>
-																		<label for="rdo-male">남</label>
-																		<input type="radio" id="rdo-male" name="gender" value="male" checked="checked">
-																		<label for="rdo-female">여</label>
-																		<input type="radio" id="rdo-female" name="gender" value="female">
-																<%
-																	} else {
-																%>
-																			<label for="rdo-male">남</label>
-																			<input type="radio" id="rdo-male" name="gender" value="male">
-																			<label for="rdo-female">여</label>
-																			<input type="radio" id="rdo-female" name="gender" value="female" checked="checked">
-																		<%
-																			}
-																		%>
+							<label for="rdo-male">남</label>
+							<input type="radio" id="rdo-male" name="gender" value="male" checked="checked">
+							<label for="rdo-female">여</label>
+							<input type="radio" id="rdo-female" name="gender" value="female">
+							<%
+								} else {
+							%>
+							<label for="rdo-male">남</label>
+							<input type="radio" id="rdo-male" name="gender" value="male">
+							<label for="rdo-female">여</label>
+							<input type="radio" id="rdo-female" name="gender" value="female" checked="checked">
+							<%
+								}
+							%>
 						</div>
 
 						<!-- 버튼영역 -->
@@ -133,7 +133,6 @@
 						<input type="hidden" name="action" value="modifiy">
 
 					</form>
-
 
 				</div>
 				<!-- //modifyForm -->
