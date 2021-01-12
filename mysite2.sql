@@ -20,6 +20,14 @@ FROM    users;
 
 INSERT INTO users VALUES(SEQ_NO.nextval, 'whjkh123', '1234', '조경환', '남성');
 
+SELECT
+    *
+FROM    users
+WHERE id = '홍길동'
+            and password = '1234';
+
+--------------------------------------------------------------------------------------------------
+
 DELETE FROM guestbook;
 
 DROP SEQUENCE seq_no;

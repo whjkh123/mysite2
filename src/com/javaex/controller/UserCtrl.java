@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.javaex.dao.UserDao;
 import com.javaex.util.WebUtil;
@@ -52,6 +53,42 @@ public class UserCtrl extends HttpServlet {
 
 			// loginForm forword
 			WebUtil.forword(request, response, "/WEB-INF/views/user/loginForm.jsp");
+		} else if ("login".equals(act)) {
+			System.out.println(act + " 로그인 결과 창");
+
+			// parameter data load
+			String id = request.getParameter("id");
+			String psw = request.getParameter("psw");
+
+			// UserDao.get() execute
+			UserDao uDao = new UserDao();
+			UserVo uVo = uDao.getUser(id, psw);
+
+			if (uVo == null) {
+				System.out.println("로그인 실패");
+
+				WebUtil.redirect(request, response, "/mysite2/user?action=loginForm");
+			} else {
+				System.out.println("로그인 성공");
+
+				System.out.println(uVo.toString());
+
+				// UserVo(id, psw) data attribute to jsp
+				HttpSession session = request.getSession();
+				session.setAttribute("authUser", uVo);
+
+				WebUtil.redirect(request, response, "/mysite2/main");
+			}
+
+		} else if ("logout".equals(act)) {
+			System.out.println(act + " 로그아웃");
+
+			// session UserVo reset
+			HttpSession session = request.getSession();
+			session.removeAttribute("authUser");
+			session.invalidate();
+
+			WebUtil.redirect(request, response, "/mysite2/main");
 		}
 
 	}

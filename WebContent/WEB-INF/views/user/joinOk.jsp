@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +15,11 @@
 
 		<div id="header">
 			<h1>
-				<a href="">MySite</a>
+				<a href="/mysite2/main">MySite</a>
 			</h1>
 
 			<ul>
-				<li><a href="">로그인</a></li>
+				<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
 				<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
 			</ul>
 		</div>
@@ -66,7 +67,7 @@
 						회원가입을 축하합니다.
 						<br>
 						<br>
-						<a href="">[로그인하기]</a>
+						<a href="/mysite2/user?action=loginForm">[로그인하기]</a>
 					</p>
 
 				</div>

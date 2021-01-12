@@ -62,8 +62,8 @@ public class UserDao {
 			String query = "INSERT INTO users VALUES(SEQ_NO.nextval, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, uVo.getId());
-			pstmt.setString(2, uVo.getName());
-			pstmt.setString(3, uVo.getPassword());
+			pstmt.setString(2, uVo.getPassword());
+			pstmt.setString(3, uVo.getName());
 			pstmt.setString(4, uVo.getGender());
 
 			count = pstmt.executeUpdate();
@@ -77,6 +77,42 @@ public class UserDao {
 		close();
 
 		return count;
+
+	}
+
+	public UserVo getUser(String id, String psw) {
+
+		UserVo uVo = null;
+
+		dbCnt();
+
+		try {
+			String query = "";
+			query += " select no, ";
+			query += " 		  name ";
+			query += " from   users ";
+			query += " where  id = ? ";
+			query += " 		  and password = ? ";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, psw);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				String name = rs.getString("name");
+
+				uVo = new UserVo(no, name);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return uVo;
 
 	}
 

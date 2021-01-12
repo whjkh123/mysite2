@@ -16,6 +16,12 @@ public class UserVo {
 		this.gender = gender;
 	}
 
+	public UserVo(int no, String name) {
+		super();
+		this.no = no;
+		this.name = name;
+	}
+
 	public int getNo() {
 		return no;
 	}

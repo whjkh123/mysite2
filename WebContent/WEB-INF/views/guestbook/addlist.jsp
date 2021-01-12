@@ -3,9 +3,11 @@
 <%@ page import="com.javaex.dao.GuestBookDao"%>
 <%@ page import="com.javaex.vo.GuestBookVo"%>
 <%@ page import="java.util.List"%>
+<%@ page import="com.javaex.vo.UserVo"%>
 
 <%
 	List<GuestBookVo> gList = (List<GuestBookVo>) request.getAttribute("GuestList");
+	UserVo uVo = (UserVo) session.getAttribute("authUser");
 %>
 
 <!DOCTYPE html>
@@ -14,7 +16,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="/mysite2/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="/mysite2/assets/css/guestbook.css" rel="stylesheet"	type="text/css">
+<link href="/mysite2/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -26,16 +28,30 @@
 				<a href="/mysite2/main">MySite</a>
 			</h1>
 
-			<ul>
-				<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
-				<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
-			</ul>
+			<%
+				if (uVo == null) {
+			%>
+									<ul>
+										<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
+										<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
+									</ul>
+								<%
+									} else {
+								%>
+											<ul>
+												<li><%=uVo.getName()%> 님 안녕하세요^^</li>
+												<li><a href="">로그아웃</a></li>
+												<li><a href="">회원정보수정</a></li>
+											</ul>
+										<%
+											}
+										%>
 		</div>
 		<!-- //header -->
 
 		<div id="nav">
 			<ul>
-				<li><a href="">방명록</a></li>
+				<li><a href="/mysite2/gbc?action=addlist">방명록</a></li>
 				<li><a href="">갤러리</a></li>
 				<li><a href="">게시판</a></li>
 				<li><a href="">입사지원서</a></li>
@@ -101,32 +117,28 @@
 				<%
 					for (int i = 0; i < gList.size(); i++) {
 				%>
-
-				<table class="guestRead">
-					<colgroup>
-						<col style="width: 10%;">
-						<col style="width: 40%;">
-						<col style="width: 40%;">
-						<col style="width: 10%;">
-					</colgroup>
-					<tr>
-						<td><%=gList.get(i).getNo()%></td>
-						<td><%=gList.get(i).getName()%></td>
-						<td><%=gList.get(i).reg_date%></td>
-						<td><a href="/mysite2/gbc?action=deleteForm&no=<%=gList.get(i).getNo()%>">[삭제]</a></td>
-					</tr>
-					<tr>
-						<td colspan=4 class="text-left"><%=gList.get(i).getContent()%></td>
-					</tr>
-				</table>
+															<table class="guestRead">
+																<colgroup>
+																	<col style="width: 10%;">
+																	<col style="width: 40%;">
+																	<col style="width: 40%;">
+																	<col style="width: 10%;">
+																</colgroup>
+																<tr>
+																	<td><%=gList.get(i).getNo()%></td>
+																	<td><%=gList.get(i).getName()%></td>
+																	<td><%=gList.get(i).reg_date%></td>
+																	<td><a
+																		href="/mysite2/gbc?action=deleteForm&no=<%=gList.get(i).getNo()%>">[삭제]</a></td>
+																</tr>
+																<tr>
+																	<td colspan=4 class="text-left"><%=gList.get(i).getContent()%></td>
+																</tr>
+															</table>
 				<!-- //guestRead -->
-
-
-
-				<%
-					}
-				%>
-
+														<%
+															}
+														%>
 			</div>
 			<!-- //guestbook -->
 		</div>

@@ -1,4 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+
+<%@ page import="com.javaex.vo.UserVo"%>
+
+<%
+	UserVo uVo = (UserVo) session.getAttribute("authUser");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +23,31 @@
 			<h1>
 				<a href="/mysite2/main">MySite</a>
 			</h1>
-
-			<ul>
-				<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
-				<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
-			</ul>
+			
+			<%
+				if (uVo == null) {
+			%>
+									<ul>
+										<li><a href="/mysite2/user?action=loginForm">로그인</a></li>
+										<li><a href="/mysite2/user?action=joinForm">회원가입</a></li>
+									</ul>
+							<%
+								} else {
+							%>
+										<ul>
+											<li><%=uVo.getName()%> 님 안녕하세요^^</li>
+											<li><a href="">로그아웃</a></li>
+											<li><a href="">회원정보수정</a></li>
+										</ul>
+									<%
+										}
+									%>
 		</div>
 		<!-- //header -->
 
 		<div id="nav">
 			<ul>
-				<li><a href="">방명록</a></li>
+				<li><a href="/mysite2/gbc?action=addlist">방명록</a></li>
 				<li><a href="">갤러리</a></li>
 				<li><a href="">게시판</a></li>
 				<li><a href="">입사지원서</a></li>
@@ -96,7 +117,7 @@
 						<div class="form-group">
 							<span class="form-text">약관동의</span>
 							<input type="checkbox" id="chk-agree" value="" name="">
-							<label for="chk-agree">서비스 약관에 동의합니다.</label>
+							<label for="chk-agree">서비스	약관에 동의합니다.</label>
 						</div>
 
 						<!-- 버튼영역 -->
