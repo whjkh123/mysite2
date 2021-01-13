@@ -17,7 +17,8 @@ import com.javaex.vo.UserVo;
 public class UserCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("UserCtrl");
 
 		request.setCharacterEncoding("UTF-8");
@@ -41,6 +42,7 @@ public class UserCtrl extends HttpServlet {
 
 			// UserVo groupping
 			UserVo uVo = new UserVo(id, password, name, gender);
+
 			System.out.println(uVo.toString());
 
 			// UserDao.insert() execute
@@ -58,6 +60,7 @@ public class UserCtrl extends HttpServlet {
 			System.out.println(act + " 로그인 결과 창");
 
 			// parameter data load
+			// http://localhost:8088/mysite2/user?id=[]&psw=[]&action=login
 			String id = request.getParameter("id");
 			String psw = request.getParameter("psw");
 
@@ -74,7 +77,7 @@ public class UserCtrl extends HttpServlet {
 
 				System.out.println(uVo.toString());
 
-				// UserVo data attribute to jsp
+				// UserVo session data attribute to jsp
 				// id, password 비교
 				HttpSession session = request.getSession();
 				session.setAttribute("authUser", uVo);
@@ -85,7 +88,7 @@ public class UserCtrl extends HttpServlet {
 		} else if ("logout".equals(act)) {
 			System.out.println(act + " 로그아웃");
 
-			// session UserVo reset
+			// session UserVo data reset
 			HttpSession session = request.getSession();
 			session.removeAttribute("authUser");
 			session.invalidate();
@@ -94,13 +97,17 @@ public class UserCtrl extends HttpServlet {
 		} else if ("modifiyForm".equals(act)) {
 			System.out.println(act + " 회원정보 수정 창");
 
+			// UserVo data attribute to jsp
 			HttpSession session = request.getSession();
+
+			// session data(authUser's Vo data) load to modifiyForm
 			UserVo authVo = (UserVo) session.getAttribute("authUser");
 
+			// UserDao.getOne(no) execute
 			UserDao uDao = new UserDao();
-
 			UserVo uVo = uDao.getOne(authVo.getNo());
 
+			// authUser's Vo session data attribute to jsp
 			session.setAttribute("userVo", uVo);
 
 			// modifiyForm forword
@@ -112,16 +119,20 @@ public class UserCtrl extends HttpServlet {
 			// name = 홍길동 → 이효리
 			// gender = male → female
 
+			// parameter data load
+			// http://localhost:8088/mysite2/user?no=[]&psw=[]&name=[]&gender=[]&action=modifiy
 			// error:java.sql.SQLException: 인덱스에서 누락된 IN 또는 OUT 매개변수:: 4 발생
 			// Update users SET password = ?, name = ?, gender = ? WHERE no = ?
-			// 변수(?)는 4개인데 sql 쿼리문엔 3개만 작성 → 해결
+			// 변수는 4개인데 sql 쿼리문엔 3개만 작성 → 해결
 			int no = Integer.parseInt(request.getParameter("no"));
 			String psw = request.getParameter("psw");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
 
+			// UserVo groupping
 			UserVo uVo = new UserVo(no, psw, name, gender);
 
+			// UserDao.update() execute
 			UserDao uDao = new UserDao();
 			uDao.dbUpd(uVo);
 
@@ -133,7 +144,7 @@ public class UserCtrl extends HttpServlet {
 			// #4 'modifiyForm'에서 '회원정보수정'을 클릭 후 'main'으로 redirect 됐을 시 name = 홍길동 유지
 			// #5 logout 후 id = test, password = 1111 login 성공, name = 이효리 변경
 
-			// UserVo data attribute to jsp
+			// authUser's Vo session data attribute to jsp
 			// 해당 계정(id, password 비교)의 UserVo 데이터 출력
 			HttpSession session = request.getSession();
 			session.setAttribute("authUser", uVo);
@@ -146,7 +157,8 @@ public class UserCtrl extends HttpServlet {
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 
