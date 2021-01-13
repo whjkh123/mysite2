@@ -108,7 +108,9 @@ public class UserCtrl extends HttpServlet {
 			UserVo uVo = uDao.getOne(authVo.getNo());
 
 			// authUser's Vo session data attribute to jsp
-			session.setAttribute("userVo", uVo);
+			session.setAttribute("userVo", uVo);// 모든 데이터를 담기 때문에 "세션 데이터는 최소한의 정보만 취급한다."란 정책에 위배 ex) login session date = id, psw
+												// user?no=[]?modifiyForm → 회원정보의 선택 기준은 'no'
+			// >> request.setAttribute("userVo", uVo);
 
 			// modifiyForm forword
 			WebUtil.forword(request, response, "/WEB-INF/views/user/modifiyForm.jsp");
@@ -119,15 +121,18 @@ public class UserCtrl extends HttpServlet {
 			// name = 홍길동 → 이효리
 			// gender = male → female
 
+			int no = Integer.parseInt(request.getParameter("no"));
+			// >> HttpSession session = request.getSession();
+			// >> UserVo authUser = (UserVo) session.getAttribute("autherUser);
+			// >> int no authUser.getNo();
+			String psw = request.getParameter("psw");
+			String name = request.getParameter("name");
+			String gender = request.getParameter("gender");
 			// parameter data load
 			// http://localhost:8088/mysite2/user?no=[]&psw=[]&name=[]&gender=[]&action=modifiy
 			// error:java.sql.SQLException: 인덱스에서 누락된 IN 또는 OUT 매개변수:: 4 발생
 			// Update users SET password = ?, name = ?, gender = ? WHERE no = ?
 			// 변수는 4개인데 sql 쿼리문엔 3개만 작성 → 해결
-			int no = Integer.parseInt(request.getParameter("no"));
-			String psw = request.getParameter("psw");
-			String name = request.getParameter("name");
-			String gender = request.getParameter("gender");
 
 			// UserVo groupping
 			UserVo uVo = new UserVo(no, psw, name, gender);
@@ -148,6 +153,7 @@ public class UserCtrl extends HttpServlet {
 			// 해당 계정(id, password 비교)의 UserVo 데이터 출력
 			HttpSession session = request.getSession();
 			session.setAttribute("authUser", uVo);
+			// >> authuUser.setName(name);
 			// 수정 된 데이터를 'session'으로부터 load → 'authUser'에 save
 			// 회원정보 수정 후 데이터 즉시 반영 확인
 			// logout 후 다시 login 했을 시 변경 된 데이터 유지 확인
