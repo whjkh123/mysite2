@@ -116,7 +116,7 @@ public class UserDao {
 
 	}
 
-	public UserVo getOne(int no) {
+	public UserVo getOne(int no) {// >> public UserVo getUser(int no) → method overriding
 
 		UserVo uVo = null;
 
