@@ -70,8 +70,7 @@ public class UserCtrl extends HttpServlet {
 
 			if (uVo == null) {
 				System.out.println("로그인 실패");
-
-				WebUtil.redirect(request, response, "/mysite2/user?action=loginForm");
+				WebUtil.redirect(request, response, "/mysite2/user?action=loginForm&result=fail");
 			} else {
 				System.out.println("로그인 성공");
 
