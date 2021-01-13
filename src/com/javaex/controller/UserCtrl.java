@@ -102,14 +102,18 @@ public class UserCtrl extends HttpServlet {
 			// session data(authUser's Vo data) load to modifiyForm
 			UserVo authVo = (UserVo) session.getAttribute("authUser");
 
+			int no = authVo.getNo();
+			
 			// UserDao.getOne(no) execute
 			UserDao uDao = new UserDao();
-			UserVo uVo = uDao.getOne(authVo.getNo());
+			UserVo uVo = uDao.getOne(no);
+			
+			System.out.println(uVo.toString());
 
 			// authUser's Vo session data attribute to jsp
-			session.setAttribute("userVo", uVo);// 모든 데이터를 담기 때문에 "세션 데이터는 최소한의 정보만 취급한다."란 정책에 위배 ex) login session date = id, psw
+			// >> session.setAttribute("userVo", uVo);// 모든 데이터를 담기 때문에 "세션 데이터는 최소한의 정보만 취급한다."란 정책에 위배 ex) login session date = id, psw
 												// user?no=[]?modifiyForm → 회원정보의 선택 기준은 'no'
-			// >> request.setAttribute("userVo", uVo);
+			request.setAttribute("userVo", uVo);
 
 			// modifiyForm forword
 			WebUtil.forword(request, response, "/WEB-INF/views/user/modifiyForm.jsp");
@@ -120,13 +124,13 @@ public class UserCtrl extends HttpServlet {
 			// name = 홍길동 → 이효리
 			// gender = male → female
 
-			int no = Integer.parseInt(request.getParameter("no"));
-			// >> HttpSession session = request.getSession();
-			// >> UserVo authUser = (UserVo) session.getAttribute("autherUser);
-			// >> int no authUser.getNo();
 			String psw = request.getParameter("psw");
 			String name = request.getParameter("name");
 			String gender = request.getParameter("gender");
+			// >> int no = Integer.parseInt(request.getParameter("no"));
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			int no = authUser.getNo();
 			// parameter data load
 			// http://localhost:8088/mysite2/user?no=[]&psw=[]&name=[]&gender=[]&action=modifiy
 			// error:java.sql.SQLException: 인덱스에서 누락된 IN 또는 OUT 매개변수:: 4 발생
@@ -135,12 +139,12 @@ public class UserCtrl extends HttpServlet {
 
 			// UserVo groupping
 			UserVo uVo = new UserVo(no, psw, name, gender);
+			
+			System.out.println(uVo.toString());
 
 			// UserDao.update() execute
 			UserDao uDao = new UserDao();
 			uDao.dbUpd(uVo);
-
-			System.out.println(uVo.toString());
 
 			// #1 id = test, password = 1234 login
 			// #2 회원정보 수정 password = 1234 → 1111, name = 홍길동 → 이효리, gender = male → female
@@ -150,9 +154,9 @@ public class UserCtrl extends HttpServlet {
 
 			// authUser's Vo session data attribute to jsp
 			// 해당 계정(id, password 비교)의 UserVo 데이터 출력
-			HttpSession session = request.getSession();
-			session.setAttribute("authUser", uVo);
-			// >> authuUser.setName(name);
+			// >> HttpSession session = request.getSession();
+			// >> session.setAttribute("authUser", uVo);
+			authUser.setName(name);
 			// 수정 된 데이터를 'session'으로부터 load → 'authUser'에 save
 			// 회원정보 수정 후 데이터 즉시 반영 확인
 			// logout 후 다시 login 했을 시 변경 된 데이터 유지 확인

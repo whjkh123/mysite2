@@ -3,9 +3,9 @@
 <%@ page import="com.javaex.vo.UserVo"%>
 
 <%
-	UserVo uVo = (UserVo) session.getAttribute("userVo");
-	// >> UserVo uVo = (UserVo) request.getAttribute("userVo");
-	// >> UserVo authUser = (UserVo) session.getAttribute("authUser");
+	// >> UserVo uVo = (UserVo) session.getAttribute("userVo");
+	UserVo uVo = (UserVo) request.getAttribute("userVo");
+	UserVo authUser = (UserVo) session.getAttribute("authUser");
 %>
 
 <!DOCTYPE html>
