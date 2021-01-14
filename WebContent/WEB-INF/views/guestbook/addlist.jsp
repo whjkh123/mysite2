@@ -5,6 +5,8 @@
 <%@ page import="java.util.List"%>
 <%@ page import="com.javaex.vo.UserVo"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%
 	List<GuestBookVo> gList = (List<GuestBookVo>) request.getAttribute("GuestList");
 %>
@@ -22,7 +24,7 @@
 <body>
 	<div id="wrap">
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 		<div id="aside">
 			<h2>방명록</h2>
@@ -61,8 +63,7 @@
 							<tr>
 								<td><label class="form-text" for="input-uname">이름</label></td>
 								<td><input id="input-uname" type="text" name="name"></td>
-								<td><label class="form-text" for="input-pass">패스워드</label>
-								</td>
+								<td><label class="form-text" for="input-pass">패스워드</label>	</td>
 								<td><input id="input-pass" type="password" name="pass"></td>
 							</tr>
 							<tr>
@@ -79,38 +80,33 @@
 
 				</form>
 
-				<%
-					for (int i = 0; i < gList.size(); i++) {
-				%>
-				<table class="guestRead">
-					<colgroup>
-						<col style="width: 10%;">
-						<col style="width: 40%;">
-						<col style="width: 40%;">
-						<col style="width: 10%;">
-					</colgroup>
-					<tr>
-						<td><%=gList.get(i).getNo()%></td>
-						<td><%=gList.get(i).getName()%></td>
-						<td><%=gList.get(i).reg_date%></td>
-						<td><a
-							href="/mysite2/gbc?action=deleteForm&no=<%=gList.get(i).getNo()%>">[삭제]</a></td>
-					</tr>
-					<tr>
-						<td colspan=4 class="text-left"><%=gList.get(i).getContent()%></td>
-					</tr>
-				</table>
-				<!-- //guestRead -->
-				<%
-					}
-				%>
+				<c:forEach items="${requestScope.GuestList}" var="list">
+					<table class="guestRead">
+						<colgroup>
+							<col style="width: 10%;">
+							<col style="width: 40%;">
+							<col style="width: 40%;">
+							<col style="width: 10%;">
+						</colgroup>
+						<tr>
+							<td>${list.no}</td>
+							<td>${list.name}</td>
+							<td>${list.reg_date}</td>
+							<td><a href="/mysite2/gbc?action=deleteForm&no=${list.no}">[삭제]</a></td>
+						</tr>
+						<tr>
+							<td colspan=4 class="text-left">${list.content}</td>
+						</tr>
+					</table>
+					<!-- //guestRead -->
+				</c:forEach>
 			</div>
 			<!-- //guestbook -->
 		</div>
 		<!-- //content  -->
 		<div class="clear"></div>
 
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
 	</div>
 	<!-- //wrap -->

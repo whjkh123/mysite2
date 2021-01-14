@@ -2,6 +2,8 @@
 
 <%@ page import="com.javaex.vo.UserVo"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 %>
@@ -12,14 +14,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="/mysite2/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="/mysite2/assets/css/guestbook.css" rel="stylesheet"	type="text/css">
+<link href="/mysite2/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
 	<div id="wrap">
 
-		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 		<div id="aside">
 			<h2>방명록</h2>
@@ -61,8 +63,8 @@
 							<td><a href="/mysite2/gbc?action=addlist">[메인으로 돌아가기]</a></td>
 						</tr>
 					</table>
-					<input type='hidden' name="no" value="<%=no%>">
-					<input type='hidden' name="action" value="delete">
+					<input type='hidden' name="no" value="${param.no}"> <input
+						type='hidden' name="action" value="delete">
 				</form>
 
 			</div>
@@ -71,7 +73,7 @@
 		<!-- //content  -->
 		<div class="clear"></div>
 
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 
 	</div>
 	<!-- //wrap -->
