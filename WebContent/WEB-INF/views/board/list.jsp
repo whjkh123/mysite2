@@ -66,7 +66,7 @@
 						</thead>
 						<tbody>
 
-							<c:forEach items="${requestScope.bList }" var="bList">
+							<c:forEach items="${requestScope.BoardList }" var="bList">
 								<tr>
 									<td>${bList.no }</td>
 									<td class="text-left"><a

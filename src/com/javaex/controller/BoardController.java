@@ -59,6 +59,12 @@ public class BoardController extends HttpServlet {
 		} else if ("read".equals(act)) {
 			System.out.println(act + "게시글 보기");
 
+			int no = Integer.parseInt(request.getParameter("no"));
+			
+			BoardDao bDao = new BoardDao();
+			
+			
+
 		} else if ("delete".equals(act)) {
 			System.out.println(act + "게시글 삭제");
 

@@ -110,7 +110,7 @@ public class BoardDao {
 		try {
 
 			String query = "";
-			query += " INSERT INTO board VALUES (seq_board_no.NEXTVAL, ?, ?, default, sysdate, ? ";
+			query += " INSERT INTO board VALUES(seq_board_no.NEXTVAL, ?, ?, default, sysdate, ?) ";
 
 			pstmt = conn.prepareStatement(query);
 
@@ -131,5 +131,7 @@ public class BoardDao {
 		return count;
 
 	}
+	
+	
 
 }
