@@ -2,10 +2,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%
-	String result = request.getParameter("result");
-%>
-
 <!DOCTYPE html>
 <html>
 <head>

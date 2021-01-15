@@ -18,13 +18,52 @@ SELECT  no as "회원식별번호",
         gender as "성별"
 FROM    users;
 
-INSERT INTO users VALUES(SEQ_NO.nextval, 'whjkh123', '1234', '조경환', '남성');
+--------------------------------------------------------------------------------------------------
 
-SELECT
-    *
-FROM    users
-WHERE id = '홍길동'
-            and password = '1234';
+CREATE TABLE board (no number,
+                    title varchar2(500) not null,
+                    content varchar2(4000),
+                    hit number default 0,
+                    reg_date date not null,
+                    user_no number,
+                    primary key(no),
+                    constraint board_fk foreign key (user_no) references users(no));
+
+DELETE FROM board;
+
+DROP SEQUENCE seq_board_no;
+
+CREATE SEQUENCE seq_board_no INCREMENT by 1 START WITH 1;
+
+SELECT  no as "게시물식별번호",
+        title as "제목",
+        content as "내용",
+        hit as "조회수",
+        reg_date as "등록일",
+        user_no as "회원식별번호"
+FROM    board;
+
+INSERT INTO board VALUES(seq_board_no.NEXTVAL, 'test', 'test', default, sysdate, 1);
+
+------------------------------------게시판 목록--------------------------------------------------------------
+
+SELECT  b.no as "게시물 식별번호",
+        b.title as "제목",
+        u.name as "글쓴이",
+        b.hit as "조회수",
+        TO_CHAR(b.reg_date, 'yyyy-mm-dd hh:mi:ss') as "작성일"
+FROM    board b, users u
+WHERE   b.user_no = u.no;
+
+-----------------------------------게시글 작성---------------------------------------------------------------
+
+SELECT  u.name as "작성자",
+        b.hit as "조회수",
+        TO_CHAR(b.reg_date, 'yyyy-mm-dd hh:mi:ss') as "작성일",
+        b.title as "제목",
+        b.content
+FROM    board b, users u
+WHERE   b.user_no = u.no;
 
 --------------------------------------------------------------------------------------------------
 
@@ -41,6 +80,8 @@ SELECT  no as "식별번호",
         TO_CHAR(reg_date, 'yyyy-mm-dd hh:mi:ss') as "date"
 FROM    guestbook
 ORDER BY no asc;
+
+--------------------------------------------------------------------------------------------------
 
 COMMIT;
 

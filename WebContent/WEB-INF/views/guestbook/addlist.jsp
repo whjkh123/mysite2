@@ -1,15 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 
-<%@ page import="com.javaex.dao.GuestBookDao"%>
-<%@ page import="com.javaex.vo.GuestBookVo"%>
-<%@ page import="java.util.List"%>
-<%@ page import="com.javaex.vo.UserVo"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<%
-	List<GuestBookVo> gList = (List<GuestBookVo>) request.getAttribute("GuestList");
-%>
 
 <!DOCTYPE html>
 <html>
