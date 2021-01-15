@@ -66,7 +66,7 @@
 						</thead>
 						<tbody>
 
-							<c:forEach items="${requestScope.BoardMain}" var="bList">
+							<c:forEach items="${requestScope.bList }" var="bList">
 								<tr>
 									<td>${bList.no }</td>
 									<td class="text-left"><a
@@ -75,14 +75,19 @@
 									<td>${bList.hit }</td>
 									<td>${bList.reg_date }</td>
 									<c:choose>
-										<c:when test="${authUser.no == bList.userNo }">
+										<c:when test="${authUser.no == bList.user_no }">
 											<td><a
-												href="/mysite2/board?action=delete&no=${bList.no }">[삭제]</a></td>
+												href="/mysite2/board?action=delete&no${bList.no }">[삭제]</a></td>
 										</c:when>
-									</c:choose>
 
+										<c:otherwise>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</c:forEach>
+
+
 						</tbody>
 					</table>
 
@@ -109,6 +114,7 @@
 						<a id="btn_write" href="/mysite2/board?action=writeForm">글쓰기</a>
 					</c:if>
 
+
 				</div>
 				<!-- //list -->
 			</div>
@@ -117,7 +123,8 @@
 		<!-- //content  -->
 		<div class="clear"></div>
 
-		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
+		<div id="footer">Copyright ⓒ 2020 황일영. All right reserved</div>
+		<!-- //footer -->
 	</div>
 	<!-- //wrap -->
 

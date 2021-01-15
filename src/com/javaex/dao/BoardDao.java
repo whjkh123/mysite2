@@ -62,13 +62,16 @@ public class BoardDao {
 		try {
 
 			String query = "";
-			query += " select b.no, ";
-			query += " 		  b.title, ";
-			query += "        u.name, ";
-			query += "        b.hit, ";
-			query += "		  TO_CHAR(b.reg_date, 'yyyy-mm-dd hh:mi:ss') ";
-			query += " from   board b, users u ";
-			query += " where  b.user_no = u.no ";
+			query += " SELECT	b.no, ";
+			query += " 			b.title, ";
+			query += " 			u.name, ";
+			query += " 			b.content, ";
+			query += "			b.hit, ";
+			query += " 			TO_CHAR(b.reg_date, 'yyyy-mm-dd hh:mi:ss'), ";
+			query += "			b.user_no ";
+			query += " From		board b, users u ";
+			query += " WHERE	b.user_no = u.no ";
+
 			pstmt = conn.prepareStatement(query);
 
 			rs = pstmt.executeQuery();
@@ -78,11 +81,12 @@ public class BoardDao {
 				int no = rs.getInt(1);
 				String title = rs.getString(2);
 				String name = rs.getString(3);
-				int hit = rs.getInt(4);
-				String reg_date = rs.getString(5);
+				String content = rs.getString(4);
+				int hit = rs.getInt(5);
+				String reg_date = rs.getString(6);
+				int user_no = rs.getInt(7);
 
-				BoardVo bVo = new BoardVo(no, title, hit, name, reg_date);
-
+				BoardVo bVo = new BoardVo(no, title, name, content, hit, reg_date, user_no);
 				bList.add(bVo);
 
 			}
@@ -97,7 +101,7 @@ public class BoardDao {
 
 	}
 
-	public int insert(BoardVo bVo) {
+	public int bIsrt(BoardVo bVo) {
 
 		int count = 0;
 
@@ -105,16 +109,14 @@ public class BoardDao {
 
 		try {
 
-			// INSERT INTO board VALUES(seq_board_no.NEXTVAL, 'test', 'test', default,
-			// sysdate, 1);
-			String query = "  ";
-			query += " INSERT INTO board VALUES(seq_board_no.nextval, ?, ?, default, sysdate, ?)  ";
+			String query = "";
+			query += " INSERT INTO board VALUES (seq_board_no.NEXTVAL, ?, ?, default, sysdate, ? ";
 
 			pstmt = conn.prepareStatement(query);
 
 			pstmt.setString(1, bVo.getTitle());
 			pstmt.setString(2, bVo.getContent());
-			pstmt.setInt(3, bVo.getNo());
+			pstmt.setInt(3, bVo.getUser_no());
 
 			count = pstmt.executeUpdate();
 
@@ -127,78 +129,7 @@ public class BoardDao {
 		close();
 
 		return count;
-	}
 
-	public BoardVo readList(int no) {
-
-		BoardVo bVo = new BoardVo();
-
-		dbCnt();
-
-		try {
-
-			String query = "";
-			query += " select b.no, ";
-			query += " 		  u.name, ";
-			query += " 		  b.hit, ";
-			query += "        TO_CHAR(b.reg_date, 'yyyy-mm-dd hh:mi:ss'), ";
-			query += "        b.title, ";
-			query += "        b.content, ";
-			query += "        b.user_no ";
-			query += " from   users u, board b ";
-			query += " where  b.user_no = u.no ";
-			query += "		  and b.no = ? ";
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, no);
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-
-				int bNo = rs.getInt(1);
-				String name = rs.getString(2);
-				int hit = rs.getInt(3);
-				String reg_date = rs.getString(4);
-				String title = rs.getString(5);
-				String content = rs.getString(6);
-				int uNo = rs.getInt(7);
-
-				bVo = new BoardVo(bNo, name, hit, reg_date, title, content, uNo);
-
-			}
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-
-		close();
-
-		return bVo;
-
-	}
-
-	public int delete(int no) {
-
-		int count = 0;
-
-		dbCnt();
-
-		try {
-			String query = "";
-			query += " DELETE FROM board WHERE no = ? ";
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, no);
-
-			count = pstmt.executeUpdate();
-
-			System.out.println("[DAO]: " + count + "건이 삭제되었습니다.");
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-
-		close();
-
-		return count;
 	}
 
 }

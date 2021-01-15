@@ -30,12 +30,32 @@ public class BoardController extends HttpServlet {
 		if ("list".equals(act)) {
 			System.out.println(act + " 게시판메인");
 
+			BoardDao bDao = new BoardDao();
+			List<BoardVo> bList = bDao.boardList();
+
+			request.setAttribute("BoardList", bList);
+
+			WebUtil.forword(request, response, "/WEB-INF/views/board/list.jsp");
 		} else if ("writeForm".equals(act)) {
 			System.out.println(act + "게시글 작성 창");
 
+			WebUtil.forword(request, response, "/WEB-INF/views/board/writeForm.jsp");
 		} else if ("write".equals(act)) {
 			System.out.println(act + "게시글 작성");
 
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo) session.getAttribute("authUser");
+
+			int user_no = authUser.getNo();
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+
+			BoardVo bVo = new BoardVo(user_no, title, content);
+
+			BoardDao bDao = new BoardDao();
+			bDao.bIsrt(bVo);
+
+			WebUtil.redirect(request, response, "/mysite2/board?action=list");
 		} else if ("read".equals(act)) {
 			System.out.println(act + "게시글 보기");
 
