@@ -110,7 +110,7 @@ public class BoardDao {
 			String query = "  ";
 			query += " INSERT INTO board VALUES(seq_board_no.nextval, ?, ?, default, sysdate, ?)  ";
 
-			pstmt = conn.prepareStatement(query); // 쿼리 만들기
+			pstmt = conn.prepareStatement(query);
 
 			pstmt.setString(1, bVo.getTitle());
 			pstmt.setString(2, bVo.getContent());
