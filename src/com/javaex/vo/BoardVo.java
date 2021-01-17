@@ -28,6 +28,24 @@ public class BoardVo {
 		this.user_no = user_no;
 	}
 
+	public BoardVo(String name, int hit, String reg_date, String title, String content, int user_no, int no) {
+		super();
+		this.title = title;
+		this.name = name;
+		this.content = content;
+		this.hit = hit;
+		this.reg_date = reg_date;
+		this.user_no = user_no;
+		this.no = no;
+	}
+
+	public BoardVo(String title, String content, int no) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.content = content;
+	}
+
 	public int getNo() {
 		return no;
 	}

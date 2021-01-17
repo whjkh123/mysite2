@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.jasper.tagplugins.jstl.core.Catch;
+
 import com.javaex.vo.BoardVo;
 
 public class BoardDao {
@@ -131,7 +133,82 @@ public class BoardDao {
 		return count;
 
 	}
-	
-	
 
+	public BoardVo readBoard(int no) {
+
+		BoardVo bVo = null;
+
+		dbCnt();
+
+		try {
+
+			String query = "";
+			query += " SELECT u.name, ";
+			query += "		  b.hit, ";
+			query += "		  b.reg_date, ";
+			query += "		  b.title, ";
+			query += "		  b.content, ";
+			query += "		  b.user_no, ";// 글 작성자만 수정가능하게..
+			query += "		  b.no ";// 수정 할 게시글 특정
+			query += " FROM	  board b, users u ";
+			query += " WHERE  b.user_no = u.no ";
+			query += "		  and b.no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setInt(1, no);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				String name = rs.getString(1);
+				int hit = rs.getInt(2);
+				String reg_date = rs.getString(3);
+				String title = rs.getString(4);
+				String content = rs.getString(5);
+				int user_no = rs.getInt(6);
+				int bNo = rs.getInt(7);
+
+				bVo = new BoardVo(name, hit, reg_date, title, content, user_no, bNo);
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return bVo;
+
+	}
+
+	public int bUpd(BoardVo bVo) {
+
+		int count = 0;
+
+		dbCnt();
+
+		try {
+
+			String query = "";
+			query += " UPDATE board SET title = ?, content = ? WHERE no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setString(1, bVo.getTitle());
+			pstmt.setString(2, bVo.getContent());
+			pstmt.setInt(3, bVo.getNo());
+
+			count = pstmt.executeUpdate();
+
+			System.out.println("[DAO]: " + count + "건이 수정되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return count;
+
+	}
 }

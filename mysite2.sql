@@ -53,7 +53,8 @@ SELECT  b.no as "게시물 식별번호",
         b.hit as "조회수",
         TO_CHAR(b.reg_date, 'yyyy-mm-dd hh:mi:ss') as "작성일"
 FROM    board b, users u
-WHERE   b.user_no = u.no;
+WHERE   b.user_no = u.no
+        and b.no = 1;
 
 -----------------------------------게시글 작성---------------------------------------------------------------
 

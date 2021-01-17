@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -8,10 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="/mysite2/assets/css/mysite.css" rel="stylesheet"
-	type="text/css">
-<link href="/mysite2/assets/css/board.css" rel="stylesheet"
-	type="text/css">
+<link href="/mysite2/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="/mysite2/assets/css/board.css" rel="stylesheet"	type="text/css">
 
 </head>
 
@@ -51,9 +48,8 @@
 					<form action="/mysite2/board" method="get">
 						<!-- 제목 -->
 						<div class="form-group">
-							<label class="form-text" for="txt-title">제목</label> <input
-								type="text" id="txt-title" name="title" value=""
-								placeholder="제목을 입력해 주세요">
+							<label class="form-text" for="txt-title">제목</label>
+							<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
 						</div>
 
 						<!-- 내용 -->
@@ -63,6 +59,7 @@
 
 						<a id="btn_cancel" href="/mysite2/board?action=list">취소</a>
 						<button id="btn_add" type="submit">등록</button>
+
 						<input type="hidden" name="action" value="write">
 
 					</form>
