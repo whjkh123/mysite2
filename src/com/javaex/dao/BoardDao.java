@@ -211,4 +211,33 @@ public class BoardDao {
 		return count;
 
 	}
+
+	public int bDle(int no) {
+
+		int count = 0;
+
+		dbCnt();
+
+		try {
+
+			String query = "";
+			query += " DELETE FROM board WHERE no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+
+			pstmt.setInt(1, no);
+
+			count = pstmt.executeUpdate();
+
+			System.out.println("[DAO]: " + count + "건이 삭제되었습니다.");
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
+
+		close();
+
+		return count;
+
+	}
 }

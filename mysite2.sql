@@ -58,7 +58,8 @@ WHERE   b.user_no = u.no
 
 -----------------------------------게시글 작성---------------------------------------------------------------
 
-SELECT  u.name as "작성자",
+SELECT  b.no,
+        u.name as "작성자",
         b.hit as "조회수",
         TO_CHAR(b.reg_date, 'yyyy-mm-dd hh:mi:ss') as "작성일",
         b.title as "제목",
@@ -66,6 +67,7 @@ SELECT  u.name as "작성자",
 FROM    board b, users u
 WHERE   b.user_no = u.no;
 
+UPDATE board SET title = '에러 발생2', content = 'test2' WHERE no = 2;
 --------------------------------------------------------------------------------------------------
 
 DELETE FROM guestbook;

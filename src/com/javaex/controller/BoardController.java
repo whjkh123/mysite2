@@ -93,7 +93,7 @@ public class BoardController extends HttpServlet {
 			bDao.bUpd(bVo);
 
 			WebUtil.redirect(request, response, "/mysite2/board?action=list");
-			// da table 상엔 content update 확인, 실제 'modifyForm'에선 변경 된 내용이 확인되질 않음..
+			// db table 상엔 content update 확인, 실제 'modifyForm'에선 변경 된 내용이 확인되질 않음..
 			// modify(bUpd) 테스트 중 localhost 무한 응답 대기 걸림..
 			// 응답 대기 중 '취소' 클릭 시 '게시판 메인'으로 탈출 가능..
 			// 수정한 내용을 db로 보내는 과정에서 무슨 오류가 있는 모양..
@@ -101,7 +101,16 @@ public class BoardController extends HttpServlet {
 			// 여전히 'content' 수정 적용 X
 			// 기존의 게시글 수정이 아니라 새로운 글 작성시 'content' 정상출력 확인, 'modifyForm.jsp'의 문제인 것으로 추정..
 			// 제공 된 html 코드에 textarea 속성 값이 누락, 추가 후 정상구동..
-			// db table 상에서도 수정 된 내용 적용유무 확인..
+			// db table 상에서도 수정 된 내용 적용 확인..
+		} else if ("delete".equals(act)) {
+			System.out.println(act + " 게시글 삭제");
+
+			int no = Integer.parseInt(request.getParameter("no"));
+
+			BoardDao bDao = new BoardDao();
+			bDao.bDle(no);
+
+			WebUtil.redirect(request, response, "/mysite2/board?action=list");
 		}
 	}
 
