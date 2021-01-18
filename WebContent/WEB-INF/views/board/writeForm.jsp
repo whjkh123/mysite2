@@ -18,14 +18,7 @@
 
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
-		<div id="aside">
-			<h2>게시판</h2>
-			<ul>
-				<li><a href="">일반게시판</a></li>
-				<li><a href="">댓글게시판</a></li>
-			</ul>
-		</div>
-		<!-- //aside -->
+		<c:import url="/WEB-INF/views/include/aside.jsp"></c:import>
 
 
 		<div id="content">
@@ -45,7 +38,7 @@
 
 			<div id="board">
 				<div id="writeForm">
-					<form action="/mysite2/board" method="get">
+					<form action="/mysite2/board" method="post">
 						<!-- 제목 -->
 						<div class="form-group">
 							<label class="form-text" for="txt-title">제목</label>

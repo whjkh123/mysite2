@@ -18,14 +18,7 @@
 
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
-		<div id="aside">
-			<h2>게시판</h2>
-			<ul>
-				<li><a href="">일반게시판</a></li>
-				<li><a href="">댓글게시판</a></li>
-			</ul>
-		</div>
-		<!-- //aside -->
+		<c:import url="/WEB-INF/views/include/aside.jsp"></c:import>
 
 		<div id="content">
 
@@ -44,7 +37,7 @@
 
 			<div id="board">
 				<div id="list">
-					<form action="/mysite2/board" method="get">
+					<form action="/mysite2/board" method="post">
 						<div class="form-group text-right">
 							<input type="text">
 							<button type="submit" id=btn_search>검색</button>
@@ -72,8 +65,7 @@
 									<td>${bList.reg_date }</td>
 									<c:choose>
 										<c:when test="${authUser.no == bList.user_no }">
-											<td><a
-												href="/mysite2/board?action=delete&no=${bList.no }">[삭제]</a></td>
+											<td><a href="/mysite2/board?action=delete&no=${bList.no }">[삭제]</a></td>
 										</c:when>
 
 										<c:otherwise>
