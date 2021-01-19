@@ -65,6 +65,8 @@ public class BoardController extends HttpServlet {
 
 			BoardVo bVo = bDao.readBoard(no);
 
+			bDao.bHit(no);
+
 			request.setAttribute("BoardVo", bVo);
 
 			WebUtil.forword(request, response, "/WEB-INF/views/board/read.jsp");
@@ -111,6 +113,17 @@ public class BoardController extends HttpServlet {
 			bDao.bDle(no);
 
 			WebUtil.redirect(request, response, "/mysite2/board?action=list");
+		} else if ("search".equals(act)) {
+			System.out.println(act + " 게시글 검색");
+
+			String str = request.getParameter("keyword");
+
+			BoardDao bDao = new BoardDao();
+			List<BoardVo> bList = bDao.boardSearch(str);
+
+			request.setAttribute("BoardList", bList);
+
+			WebUtil.forword(request, response, "/WEB-INF/views/board/list.jsp");
 		}
 	}
 

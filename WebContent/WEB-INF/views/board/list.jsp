@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>My site</title>
 <link href="/mysite2/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="/mysite2/assets/css/board.css" rel="stylesheet"	type="text/css">
 
@@ -39,8 +39,10 @@
 				<div id="list">
 					<form action="/mysite2/board" method="post">
 						<div class="form-group text-right">
-							<input type="text">
+							<input type="text" name="keyword">
 							<button type="submit" id=btn_search>검색</button>
+
+							<input type="hidden" name="action" value="search">
 						</div>
 					</form>
 					<table>
@@ -59,22 +61,19 @@
 							<c:forEach items="${requestScope.BoardList }" var="bList">
 								<tr>
 									<td>${bList.no }</td>
-									<td class="text-left"><a href="/mysite2/board?action=read&no=${bList.no }">${bList.title }</a></td>
+									<td class="text-left"><a
+										href="/mysite2/board?action=read&no=${bList.no }">${bList.title }</a></td>
 									<td>${bList.name }</td>
 									<td>${bList.hit }</td>
 									<td>${bList.reg_date }</td>
-									<c:choose>
-										<c:when test="${authUser.no == bList.user_no }">
-											<td><a href="/mysite2/board?action=delete&no=${bList.no }">[삭제]</a></td>
-										</c:when>
 
-										<c:otherwise>
-											<td></td>
-										</c:otherwise>
-									</c:choose>
+									<c:if test="${authUser.no == bList.user_no }">
+										<td><a href="/mysite2/board?action=delete&no=${bList.no }">[삭제]</a></td>
+									</c:if>
+
+									<td></td>
 								</tr>
 							</c:forEach>
-
 
 						</tbody>
 					</table>
@@ -95,13 +94,11 @@
 							<li><a href="">▶</a></li>
 						</ul>
 
-
 						<div class="clear"></div>
 					</div>
 					<c:if test="${!empty authUser }">
 						<a id="btn_write" href="/mysite2/board?action=writeForm">글쓰기</a>
 					</c:if>
-
 
 				</div>
 				<!-- //list -->
