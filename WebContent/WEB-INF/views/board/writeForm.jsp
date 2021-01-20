@@ -20,7 +20,6 @@
 
 		<c:import url="/WEB-INF/views/include/aside.jsp"></c:import>
 
-
 		<div id="content">
 
 			<div id="content-head">
